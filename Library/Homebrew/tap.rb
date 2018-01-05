@@ -21,6 +21,9 @@ class Tap
       user = args[0]
       repo = args[1]
     end
+    if user.downcase == "homebrew"
+      user = "yugabyte"
+    end
 
     if [user, repo].any? { |part| part.nil? || part.include?("/") }
       raise "Invalid tap name '#{args.join("/")}'"
