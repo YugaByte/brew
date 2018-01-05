@@ -33,7 +33,7 @@ class Tap
     user = user.capitalize if ["homebrew", "linuxbrew"].include? user
     repo = repo.strip_prefix "homebrew-"
 
-    if ["Homebrew", "Linuxbrew"].include?(user) && ["core", "homebrew"].include?(repo)
+    if ["Homebrew", "Linuxbrew", "yugabyte"].include?(user) && ["core", "homebrew"].include?(repo)
       return CoreTap.instance
     end
 
