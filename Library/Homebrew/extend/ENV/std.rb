@@ -7,7 +7,7 @@ module Stdenv
 
   # @private
   SAFE_CFLAGS_FLAGS = "-w -pipe".freeze
-  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || "native").freeze
+  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || (OS.linux? "ivybridge" : "native")).freeze
   DEFAULT_FLAGS = (OS.mac? ? "-march=core2 -msse4" : "-march=#{HOMEBREW_ARCH}").freeze
 
   # @private
@@ -69,9 +69,6 @@ module Stdenv
       end
       prepend "LDFLAGS", "-Wl,--dynamic-linker=#{HOMEBREW_PREFIX}/lib/ld.so"
     end
-
-    # Added by YugaByte so that the built binaries would work on all EC2 instance types.
-    append_to_cflags "-march=ivybridge" if OS.linux?
 
     if inherit?
       # Inherit CC, CXX and compiler flags from the parent environment.
