@@ -72,6 +72,8 @@ module Stdenv
       prepend "LDFLAGS", "-Wl,--dynamic-linker=#{HOMEBREW_PREFIX}/lib/ld.so"
     end
 
+    append_to_cflags "-march=ivybridge" if OS.linux?
+
     if respond_to?(compiler)
       send(compiler)
     else
