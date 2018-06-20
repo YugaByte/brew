@@ -7,7 +7,7 @@ module Stdenv
 
   # @private
   SAFE_CFLAGS_FLAGS = "-w -pipe".freeze
-  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || "native").freeze
+  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || (OS.linux? "ivybridge" : "native")).freeze
   DEFAULT_FLAGS = (OS.mac? ? "-march=core2 -msse4" : "-march=#{HOMEBREW_ARCH}").freeze
 
   # @private
@@ -71,8 +71,6 @@ module Stdenv
       end
       prepend "LDFLAGS", "-Wl,--dynamic-linker=#{HOMEBREW_PREFIX}/lib/ld.so"
     end
-
-    append_to_cflags "-march=ivybridge" if OS.linux?
 
     if respond_to?(compiler)
       send(compiler)
