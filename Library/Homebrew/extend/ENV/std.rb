@@ -7,7 +7,7 @@ module Stdenv
 
   # @private
   SAFE_CFLAGS_FLAGS = "-w -pipe".freeze
-  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || (OS.linux? "ivybridge" : "native")).freeze
+  HOMEBREW_ARCH = (ENV["HOMEBREW_ARCH"] || (OS.linux? ? "ivybridge" : "native")).freeze
   DEFAULT_FLAGS = (OS.mac? ? "-march=core2 -msse4" : "-march=#{HOMEBREW_ARCH}").freeze
 
   # @private

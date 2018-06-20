@@ -20,6 +20,9 @@ class Tap
       user = args[0]
       repo = args[1]
     end
+    if user.downcase == "homebrew"
+      user = "yugabyte"
+    end
 
     if [user, repo].any? { |part| part.nil? || part.include?("/") }
       raise "Invalid tap name '#{args.join("/")}'"
@@ -29,7 +32,7 @@ class Tap
     user = user.capitalize if ["homebrew", "linuxbrew"].include? user
     repo = repo.strip_prefix "homebrew-"
 
-    if ["Homebrew", "Linuxbrew"].include?(user) && ["core", "homebrew"].include?(repo)
+    if ["Homebrew", "Linuxbrew", "yugabyte"].include?(user) && ["core", "homebrew"].include?(repo)
       return CoreTap.instance
     end
 
@@ -593,7 +596,7 @@ class CoreTap < Tap
     if OS.mac? || ENV["HOMEBREW_FORCE_HOMEBREW_ORG"]
       "https://github.com/Homebrew/homebrew-core".freeze
     else
-      "https://github.com/Linuxbrew/homebrew-core".freeze
+      "https://github.com/yugabyte/linuxbrew-core".freeze
     end
   end
 
